@@ -3,7 +3,7 @@ package dw.gameshop.controller;
 import dw.gameshop.model.Game;
 import dw.gameshop.service.GameshopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class GameShopController {
         this.gameshopService = gameshopService;
     }
     @PostMapping("aip/gameshop")
-    public Game saveGam(@RequestBody Game game){
+    public Game saveGame(@RequestBody Game game){
         return gameshopService.saveGame(game);
     }
     @GetMapping("aip/gameshop")
