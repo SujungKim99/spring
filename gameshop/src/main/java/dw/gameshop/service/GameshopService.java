@@ -1,7 +1,10 @@
 package dw.gameshop.service;
 
+import dw.gameshop.expection.ResourceNotFoundException;
 import dw.gameshop.model.Game;
+import dw.gameshop.model.User;
 import dw.gameshop.resposition.GameshopRespository;
+import dw.gameshop.resposition.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +15,14 @@ import java.util.Optional;
 @Service
 public class GameshopService {
 
-    @Autowired
     GameshopRespository gameshopRespositoty;
+    //유저파트
+    UserRespository userRespository;
+
+    public GameshopService(GameshopRespository gameshopRespositoty, UserRespository userRespository) {
+        this.gameshopRespositoty = gameshopRespositoty;
+        this.userRespository = userRespository;
+    }
 
     public Game saveGame(Game game) {
         gameshopRespositoty.save(game);
@@ -27,7 +36,7 @@ public class GameshopService {
     public Game getGameById(@PathVariable long id) {
         Optional<Game> game = gameshopRespositoty.findById(id);
         if (game.isEmpty()) {
-            return null;
+            throw new ResourceNotFoundException("Gameshop","ID",id);
         } else {
             return game.get();
         }
@@ -44,7 +53,10 @@ public class GameshopService {
             gameshopRespositoty.save(game1.get());
             return game1.get();
         }else {
-            return null;
+            throw new ResourceNotFoundException("Gameshop","ID",id);
         }
+    }
+    public User saveUser(User user){
+        return  userRespository.save(user);
     }
 }

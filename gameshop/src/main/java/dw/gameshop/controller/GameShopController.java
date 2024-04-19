@@ -1,9 +1,12 @@
 package dw.gameshop.controller;
 
 import dw.gameshop.model.Game;
+import dw.gameshop.model.User;
 import dw.gameshop.service.GameshopService;
 import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,21 +17,28 @@ public class GameShopController {
     public GameShopController(GameshopService gameshopService) {
         this.gameshopService = gameshopService;
     }
-    @PostMapping("aip/gameshop")
-    public Game saveGame(@RequestBody Game game){
-        return gameshopService.saveGame(game);
+    @PostMapping("products")
+    public ResponseEntity<Game> saveGame(@RequestBody Game game){
+        return new ResponseEntity<>(gameshopService.saveGame(game), HttpStatus.OK) ;
     }
-    @GetMapping("aip/gameshop")
-    public List<Game> getAllGames() {
-        return gameshopService.getAllGames();
+    @GetMapping("products")
+    public ResponseEntity<List<Game>> getAllGames() {
+        return new ResponseEntity<>(gameshopService.getAllGames(),HttpStatus.OK);
     }
-    @GetMapping("aip/gameshop/{id}")
-    public Game getGameById(@PathVariable long id) {
-        return gameshopService.getGameById(id);
+    @GetMapping("products/{id}")
+    public ResponseEntity<Game> getGameById(@PathVariable long id) {
+        return new ResponseEntity<>(gameshopService.getGameById(id),HttpStatus.OK);
     }
-    @PutMapping("aip/gameshop/{id}")
-    public Game updateGamesById(@PathVariable long id, @RequestBody Game game){
-        return gameshopService.updateGamesById(id,game);
+    @PutMapping("productsp/{id}")
+    public ResponseEntity<Game> updateGamesById(@PathVariable long id, @RequestBody Game game){
+        return new ResponseEntity<>(gameshopService.updateGamesById(id,game), HttpStatus.OK);
     }
+
+    //유저 파트
+    @PostMapping("product/user")
+    public ResponseEntity<User> saveUSer(@RequestBody User user){
+        return new ResponseEntity<>(gameshopService.saveUser(user), HttpStatus.OK);
+    }
+
 
 }
