@@ -1,4 +1,4 @@
-package dw.gameshop.resposition;
+package dw.gameshop.respositroy;
 
 import dw.gameshop.model.Purchase;
 import dw.gameshop.model.User;
