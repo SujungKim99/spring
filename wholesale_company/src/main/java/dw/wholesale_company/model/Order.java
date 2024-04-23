@@ -20,7 +20,7 @@ public class Order {
     @Column(name = "주문번호")
     private String orderId;
     @ManyToOne
-   @JoinColumn(name = "고객번호")
+    @JoinColumn(name = "고객번호")
     private Customer customerId;
     @ManyToOne
     @JoinColumn(name = "사원번호")
