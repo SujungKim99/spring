@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -21,15 +22,15 @@ public class Order {
     private String orderId;
     @ManyToOne
     @JoinColumn(name = "고객번호")
-    private Customer customerId;
+    private Customer customerId;              //  Customer : 외래키로 사용되고 있는 엔티티클래스의 타입을 데이터타입으로 사용한다. 변수명은 보통 객체의 소문자를 사용한다. = customer
     @ManyToOne
     @JoinColumn(name = "사원번호")
     private Employee employeeId;
     @Column(name = "주문일")
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
     @Column(name = "요청일")
-    private LocalDateTime requestData;
+    private LocalDate requestData;
     @Column(name = "발송일")
-    private LocalDateTime shippingData;
+    private LocalDate shippingData;
 
 }

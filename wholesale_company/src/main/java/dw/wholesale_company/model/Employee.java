@@ -40,7 +40,7 @@ public class Employee {
     private String area;
     @Column(name = "집전화")
     private String telephoneNo;
-    @ManyToOne
+    @ManyToOne                             //다대일 관계를 설정(외래키를 사용한 컬럼이라고 명시) - @ManyToOne(다대일), @JoinColumn(외래키사용)
     @JoinColumn(name = "부서번호")
     private Department department;
     @Column(name = "상사번호")
