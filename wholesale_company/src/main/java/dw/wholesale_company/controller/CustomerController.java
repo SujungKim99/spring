@@ -31,4 +31,9 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerWithHighMileThanAvg(),
                 HttpStatus.OK);
     }
+
+    @GetMapping("customers/mileage/{grade}")
+    public int getCustomerByMileageGrade(@PathVariable String grade) {
+        return customerService.getCustomerByMileageGrade(grade);
+    }
 }

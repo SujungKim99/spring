@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() {
         return productRepository.findAll();
     }
 
@@ -26,7 +27,7 @@ public class ProductService {
     //제품의 재고가 50개 미만인 제품 정보 얻기
     public List<Product> getProductByInventoryUnder(int num) {
         List<Product> productList = productRepository.findAll();
-        return productList.stream().filter(p->p.getInventory() < num)
+        return productList.stream().filter(p -> p.getInventory() < num)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +36,7 @@ public class ProductService {
         List<Product> productList = productRepository.findAll();
         List<Product> productListByProductName = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
-            if(productList.get(i).getProductName().contains(productName)){
+            if (productList.get(i).getProductName().contains(productName)) {
                 productListByProductName.add(productList.get(i));
             }
         }
@@ -43,12 +44,12 @@ public class ProductService {
     }
 
     //제품 단가가 5,000원 이상 10,000원 이하인 제품에는 무엇이 있는지 검색하시오.
-    public List<Product> getProductByUnitPrice(long lowLimit, long highLimit){
+    public List<Product> getProductByUnitPrice(long lowLimit, long highLimit) {
         List<Product> productList = productRepository.findAll();
         List<Product> productByUnitPrice = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
             long unitPrice = productList.get(i).getUnitPrice();
-            if( unitPrice >= lowLimit && unitPrice <= highLimit ){
+            if (unitPrice >= lowLimit && unitPrice <= highLimit) {
                 productByUnitPrice.add(productList.get(i));
             }
         }
@@ -67,15 +68,18 @@ public class ProductService {
 //            }
 //        }
 //        return product;
-    return productIds.stream().map(x->productRepository.findById(x)).filter(Optional::isPresent)
-            .map(a -> a.get())
-            .collect(Collectors.toList());
+        return productIds.stream().map(x -> productRepository.findById(x)).filter(Optional::isPresent)
+                .map(a -> a.get())
+                .collect(Collectors.toList());
     }
 
+    //
     //제품 재고금액이 높은 상위 10개 제품
-    //(재고금액 = 단가(unitPrice) * 재고(inventory))
-    public List<Product> getHighPriceProductTop10(){
-        List<Product> productAll = productRepository.findAll();
-        
+    public List<Product> getProductByInventoryPrice(int limit) {
+        List<Product> productList = productRepository.findAll();
+        return productList.stream().sorted(Comparator.comparingLong(
+                        (Product p) -> p.getUnitPrice() * p.getInventory()).reversed())
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 }

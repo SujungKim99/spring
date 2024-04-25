@@ -47,4 +47,9 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProductByIdForList(@RequestBody List<Long> productIds) {
         return new ResponseEntity<>(productService.getProductByIdForList(productIds),HttpStatus.OK);
     }
+    @GetMapping("/products/inventoryprice/{limit}")
+    public ResponseEntity<List<Product>> getProductByInventoryPrice(@PathVariable int limit) {
+        return new ResponseEntity<>(productService.getProductByInventoryPrice(limit),
+                HttpStatus.OK);
+    }
 }
