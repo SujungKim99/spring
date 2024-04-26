@@ -1,5 +1,6 @@
 package dw.wholesale_company.service;
 
+import dw.wholesale_company.exception.ResourceNotFoundException;
 import dw.wholesale_company.model.Customer;
 import dw.wholesale_company.model.Mileage;
 import dw.wholesale_company.repository.CustomerRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,7 +92,8 @@ public class CustomerService {
 
         // 선택된 Mileage가 없는 경우 0을 반환
         return 0;
-    }*/
+    }
+    */
         // 람다식 압축
         return mileageRepository.findAll().stream()
                 .filter(mileage -> mileage.getMileageGrade().equalsIgnoreCase(grade))
@@ -104,6 +107,16 @@ public class CustomerService {
                         })
                         .count())
                 .orElse(0L).intValue();
-
+    }
+    //마일리지 등급명별로 고객수를 보이시오
+    //선생님 코드
+    public List<Customer> getCustomerByMileageGradeT(String grade){
+        Optional<Mileage> mileageOptional = mileageRepository.findById(grade);
+        if(mileageOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Mileage","Grade", grade);
+        }
+        List<Customer> customers = customerRepository.findAll();
+        return customers.stream().filter(customer -> customer.getMileage() >= mileageOptional.get().getLowLimit()
+                && customer.getMileage() <= mileageOptional.get().getHighLimit()).collect(Collectors.toList());
     }
 }

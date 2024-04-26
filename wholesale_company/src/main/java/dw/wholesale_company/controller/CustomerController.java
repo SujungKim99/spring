@@ -20,7 +20,7 @@ public class CustomerController {
     CustomerService customerService;
 
     @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllCustomer(){
+    public ResponseEntity<List<Customer>> getAllCustomer() {
         return new ResponseEntity<>(customerService.getAllCustomer(), HttpStatus.OK);
     }
 
@@ -32,8 +32,17 @@ public class CustomerController {
                 HttpStatus.OK);
     }
 
+    //마일리지 등급명별로 고객수를 보이시오
     @GetMapping("customers/mileage/{grade}")
     public int getCustomerByMileageGrade(@PathVariable String grade) {
         return customerService.getCustomerByMileageGrade(grade);
     }
+
+    /*//마일리지 등급명별로 고객수를 보이시오
+    //선생님 코드
+    @GetMapping("/customers/grade/{grade}")
+    public ResponseEntity<List<Customer>> getCustomerByMileageGradeT(@PathVariable String grade) {
+        return new ResponseEntity<>(customerService.getCustomerByMileageGradeT(grade),
+                HttpStatus.OK);
+    }*/
 }

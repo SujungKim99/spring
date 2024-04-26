@@ -51,7 +51,13 @@ public class OrderController {
         return new ResponseEntity<>(orderService.getCustomerByOrderDate(orderDate),
                 HttpStatus.OK);
     }
-
+    //선생님코드 :) JPQL 설명 - Repository 참고
+    //도시별로 주문금액합을 보이되 주문금액합이 많은 상위 5개의 도시에 대한 결과만 보이시오.
+//    @GetMapping("/orders/city/orderamount/{limit}")
+//    public ResponseEntity<List<Object[]>> getTopCitiesByTotalOrderAmount(@PathVariable int limit) {
+//        return new ResponseEntity<>(orderService.getTopCitiesByTotalOrderAmount(limit),
+//                HttpStatus.OK);
+//    }
 
 
 }

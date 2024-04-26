@@ -65,7 +65,14 @@ public class OrderService {
     //2020년 4월 9일에 주문한 고객의 모든 정보을 보이시오.
     public List<Customer> getCustomerByOrderDate(LocalDate orderDate) {
         List<Order> orders = orderRepository.findByOrderDate(orderDate);
-        return orders.stream().map(order -> order.getCustomerId()).collect(Collectors.toList());
+        return orders.stream().map(order -> order.getCustomer()).collect(Collectors.toList());
     }
+
+    //선생님코드 :) JPQL 설명 - Repository 참고
+    //도시별로 주문금액합을 보이되 주문금액합이 많은 상위 5개의 도시에 대한 결과만 보이시오.
+//    public List<Object[]> getTopCitiesByTotalOrderAmount(int limit) {
+//        List<Object[]> cities = orderRepository.getTopCitiesByTotalOrderAmount();
+//        return cities.stream().limit(limit).collect(Collectors.toList());
+//    }
 
 }

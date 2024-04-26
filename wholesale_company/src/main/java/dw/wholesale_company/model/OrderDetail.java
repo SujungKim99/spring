@@ -20,10 +20,10 @@ public class OrderDetail {
     private long orderDetailId;
     @ManyToOne
     @JoinColumn(name = "주문번호")
-    private Order orderId;
+    private Order order;
     @ManyToOne
     @JoinColumn(name = "제품번호")
-    private Product productId;
+    private Product product;
     @Column(name = "단가")
     private long unitPrice;
     @Column(name = "주문수량")
