@@ -4,7 +4,7 @@ import dw.gameshop.expection.ResourceNotFoundException;
 import dw.gameshop.model.Game;
 import dw.gameshop.model.User;
 import dw.gameshop.respositroy.GameshopRespository;
-import dw.gameshop.respositroy.UserRespository;
+import dw.gameshop.respositroy.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -16,9 +16,9 @@ public class GameshopService {
 
     GameshopRespository gameshopRespository;
     //유저파트
-    UserRespository userRespository;
+    UserRepository userRespository;
 
-    public GameshopService(GameshopRespository gameshopRespositoty, UserRespository userRespository) {
+    public GameshopService(GameshopRespository gameshopRespositoty, UserRepository userRespository) {
         this.gameshopRespository = gameshopRespositoty;
         this.userRespository = userRespository;
     }

@@ -4,7 +4,7 @@ import dw.gameshop.expection.ResourceNotFoundException;
 import dw.gameshop.model.Purchase;
 import dw.gameshop.model.User;
 import dw.gameshop.respositroy.PurchaesRepository;
-import dw.gameshop.respositroy.UserRespository;
+import dw.gameshop.respositroy.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class PurchaseService {
     @Autowired
     PurchaesRepository purchaesRepository;
     @Autowired
-    UserRespository userRespository;
+    UserRepository userRespository;
     public Purchase savePurchase(Purchase purchase){
         //구매확정 바로 직전, 현재시간을 저장함
         purchase.setPurchaseTime(LocalDateTime.now());
