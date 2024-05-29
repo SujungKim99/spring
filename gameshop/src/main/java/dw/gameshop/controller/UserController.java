@@ -4,6 +4,7 @@ import dw.gameshop.dto.UserDto;
 import dw.gameshop.service.UserDetailService;
 import dw.gameshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpResponse;
 
 @RestController
 @RequestMapping("/user")
@@ -52,6 +55,14 @@ public class UserController {
         return ResponseEntity.ok("Success");
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false); // 없으면 null -> null 체크 필요
+        if (session != null) {
+            session.invalidate();
+        }
+        return "You have been logged out.";
+    }
     @GetMapping("current")
     public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
