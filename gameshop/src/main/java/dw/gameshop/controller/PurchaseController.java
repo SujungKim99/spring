@@ -10,23 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class PurchaseController {
     @Autowired
     PurchaseService purchaseService;
-    @PostMapping("products/purchase")
-    public Purchase savePurchase(@RequestBody Purchase purchase){
+
+    @PostMapping("/products/purchase")
+    public Purchase savePurchase(@RequestBody Purchase purchase) {
         return purchaseService.savePurchase(purchase);
     }
-    @GetMapping("products/purchase")
-    public List<Purchase> getAllPurchase() {
-        return purchaseService.getAllPurchase();
+
+    @PostMapping("/products/purchaselist")
+    public List<Purchase> savePurchaseList(@RequestBody List<Purchase> purchaseList) {
+        return purchaseService.savePurchaseList(purchaseList);
     }
-    @GetMapping("products/purchase/id/{userId}")
-    public List<Purchase> getPurchaseListById(@PathVariable String userId){
-        return  purchaseService.getPurchaseListByUser(userId);
+
+    @GetMapping("/products/purchase")
+    public List<Purchase> getAllPurchases() {
+        return purchaseService.getAllPurchases();
     }
-    @GetMapping("products/purchase/name/{userName}")
-    public ResponseEntity<List<Purchase>> getPurchaseListByUserName(@PathVariable String userName) {
-        return new ResponseEntity<>(purchaseService.getPurchaseListByUserName(userName), HttpStatus.OK);
+
+    @GetMapping("/products/purchase/id/{userId}")
+    public List<Purchase> getPurchaseListByUser(@PathVariable String userId) {
+        return purchaseService.getPurchaseListByUser(userId);
     }
+
+    @GetMapping("/products/purchase/name/{userName}")
+    public ResponseEntity<List<Purchase>> getPurchaseListByUserName(
+            @PathVariable String userName) {
+        return new ResponseEntity<>(purchaseService.getPurchaseListByUserName(userName),
+                HttpStatus.OK);
+    }
+
 }
