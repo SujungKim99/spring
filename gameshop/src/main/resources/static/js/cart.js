@@ -2,45 +2,51 @@ const url = "http://localhost:8080/api/products/purchaselist";
 
 function sessionCurrent() {
   axios
-  .get("http://localhost:8080/user/current", {withCredentials: true})
-  .then((response)=>{
-    console.log("데이터:", response.data);
-    if (response.status == 200) {
-      const userId = response.data;
-      let cartItems = JSON.parse(localStorage.getItem(userId));
-      if (cartItems) {
-        displayCart(cartItems);
-        const data = cartItems.map((game)=>{
-          // Purchase객체를 만들어서 리턴
-          return { game: game, user:{userId:userId} };
-        })
-        document.querySelector(".purchaseBtn")
-          .addEventListener("click", ()=>{
-            if (confirm("구매하시겠습니까?")) {
-              axios
-              .post(url, data, {withCredentials: true})
-              .then((response)=>{
-                console.log("데이터:", response.data);
-                localStorage.removeItem(userId);
-              })
-              .catch((error)=>{
-                console.log("에러 발생:", error);
-              });
-            }
-        });
+    .get("http://localhost:8080/user/current", { withCredentials: true })
+    .then((response) => {
+      console.log("데이터:", response.data);
+      if (response.status == 200) {
+        const userId = response.data.userId;
+        const authority = response.data.authority[0].authority;
+        let cartItems = JSON.parse(localStorage.getItem(userId));
+        if (cartItems) {
+          displayCart(cartItems);
+          const data = cartItems.map((game) => {
+            // Purchase객체를 만들어서 리턴
+            return {
+              game: game,
+              user: { userId: userId, authority: { authorityName: authority } },
+            };
+          });
+          document
+            .querySelector(".purchaseBtn")
+            .addEventListener("click", () => {
+              if (confirm("구매하시겠습니까?")) {
+                axios
+                  .post(url, data, { withCredentials: true })
+                  .then((response) => {
+                    console.log("데이터:", response.data);
+                    localStorage.removeItem(userId);
+                    window.location.reload();
+                  })
+                  .catch((error) => {
+                    console.log("에러 발생:", error);
+                  });
+              }
+            });
+        }
       }
-    }
-  })
-  .catch((error)=>{
-    console.log("에러 발생:", error);
-    alert("로그인해주세요.");
-  })
+    })
+    .catch((error) => {
+      console.log("에러 발생:", error);
+      alert("로그인해주세요.");
+    });
 }
 
 function displayCart(games) {
   const tbody = document.querySelector(".cart-body");
   let totalPrice = 0;
-  games.forEach((data)=>{
+  games.forEach((data) => {
     // 태그 요소 생성
     const tr = document.createElement("tr");
     const imgtd = document.createElement("td");
@@ -65,7 +71,7 @@ function displayCart(games) {
     tbody.appendChild(tr);
 
     totalPrice = totalPrice + data.price;
-  })
+  });
   document.querySelector(".totalprice").textContent = "총 " + totalPrice + "원";
 }
 

@@ -18,8 +18,6 @@ document.querySelector("#password").addEventListener("change", (e) => {
   password = e.target.value;
 });
 
-
-
 document.querySelector("#newuserId").addEventListener("change", (e) => {
   console.log(e.target.value);
   newuserId = e.target.value;
@@ -82,7 +80,8 @@ document.querySelector(".signupBtnInput").addEventListener("click", () => {
       .post(urlSignup, data, { withCredentials: true })
       .then((response) => {
         console.log("데이터: ", response);
-        sessionCurrent();
+        alert("회원가입이 완료되었습니다. 로그인해주세요.");
+        window.location.reload();
       })
       .catch((error) => {
         console.log("에러 발생: ", error);
@@ -101,7 +100,7 @@ function sessionCurrent() {
           document.querySelector(".login-box").classList.add("hidden");
           document.querySelector(".user-box").classList.remove("hidden");
           document.querySelector(".user-box p").textContent =
-            response.data + "님, 환영합니다.";
+            response.data.userId + "님, 환영합니다.";
         }
       }
     })
