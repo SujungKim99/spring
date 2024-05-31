@@ -20,6 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+//preAuthorise 를 쓰기 위해서 꼭 @EnableMethodSecurity 를 작성해야한다.
 @EnableMethodSecurity
 public class SecurityConfig  {
     @Autowired
